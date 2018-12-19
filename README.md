@@ -1,10 +1,10 @@
-# SMB Demo .NET Framework
+# SMB Demo .NET Core
 
-This repository is a trivial implementation of a .NET framework web application utilized to show features related to connecting a cloud foundry application to a remote SMB Share.  This application will allow you to perform simple CRUD operations on a the SMB share directory and also review the permissions set on that directory.  The credentials to connect to the share are exposed by an user provided service.
+This repository is a trivial implementation of a .NET Core web application utilized to show features related to connecting a cloud foundry application to a remote SMB Share.  This application will allow you to perform simple CRUD operations on a the SMB share.  The credentials to connect to the share are exposed by the [SMB Volume Service for PCF Tile](https://network.pivotal.io/products/smb-volume-service/).  Configuration details for using Volume Services on Cloud Foundry can be found [here](https://docs.cloudfoundry.org/devguide/services/using-vol-services.html)
 
-1. Clone the application to your local working environment with the following command: `git clone https://github.com/tezizzm/SmbDemoFramework`
+1. Clone the application to your local working environment with the following command: `git clone https://github.com/tezizzm/SmbDemoCore`
 
-2. From the location you cloned the git repository, navigate to the project directory using the following command: `cd .\src\LighthouseWeb\`
+2. From the location you cloned the git repository, navigate to the project directory using the following command: `cd .\src\LighthouseWebCore\`
 
 3. If you have not already previously created an SMB Share see the following links which give instructions for creating an SMB Share in [Powershell](https://docs.microsoft.com/en-us/powershell/module/smbshare/new-smbshare?view=win10-ps) or using [Windows Explorer or Computer Management](https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/file-share--smb--symbol-server)
 

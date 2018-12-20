@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,9 +35,14 @@ namespace LighthouseUiCore
             // Add Steeltoe Cloud Foundry Options to service container
             services.ConfigureCloudFoundryOptions(Configuration);
 
-            services.AddTransient<ISmbService, SmbService>();
             services.AddTransient<ISmbClientFactory, SmbClientFactory>();
+            services.AddTransient<ISmbService, SmbService>();
+            services.AddAntiforgery();
 
+            // Not recommended to persist key ring to file system of the container.
+            // For demo purposes this will suffice
+            services.AddDataProtection();
+                //.SetApplicationName("lighthousewebcoreui");
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -61,7 +67,7 @@ namespace LighthouseUiCore
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Files}/{action=Index}/{id?}");
+                    template: "{controller=File}/{action=Index}/{id?}");
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ namespace LighthouseUiCore.Controllers
         // GET: Operations/Details/5
         public async Task<ActionResult> Details(string name)
         {
-            var file = await _smbService.GetFile(name);
+            var file = await _smbService.GetFileAsync(name);
             if (file?.Name == null)
             {
                 return NotFound();
@@ -40,19 +41,18 @@ namespace LighthouseUiCore.Controllers
 
         // POST: Operations/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormFile file)
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(IFormFile file)
         {
             try
             {
-                _smbService.CreateFile(file);
-
-                // TODO: Add insert logic here
-
+                Console.WriteLine($"IFormFile == {file == null}");
+                await _smbService.CreateFileAsync(file);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return View();
             }
         }
@@ -60,7 +60,7 @@ namespace LighthouseUiCore.Controllers
         // GET: Operations/Delete/5
         public async Task<ActionResult> Delete(string name)
         {
-            var file =await _smbService.GetDeleteModel(name);
+            var file = await _smbService.GetDeleteModel(name);
             if (file?.Name == null)
             {
                 return NotFound();
@@ -70,7 +70,7 @@ namespace LighthouseUiCore.Controllers
 
         // POST: Operations/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Delete(string name, IFormCollection collection)
         {
             try
@@ -79,8 +79,9 @@ namespace LighthouseUiCore.Controllers
                 _smbService.DeleteFile(name);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return View();
             }
         }

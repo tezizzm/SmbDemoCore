@@ -19,7 +19,8 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
+        @Html.HiddenFor(Model => Model.Name)
+        <input type="submit" value="Delete" class="btn btn-default"/> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>

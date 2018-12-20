@@ -26,7 +26,7 @@ namespace LighthouseUiCore
         public async Task WriteAsync(string file, string data)
         {
             Console.WriteLine($"Writing data to {file}");
-            using (var streamWriter = new StreamWriter($"{LocalPath}\\{file}"))
+            using (var streamWriter = new StreamWriter(Path.Join(LocalPath, file)))
             {
                 await streamWriter.WriteLineAsync(data);
             }
@@ -34,7 +34,7 @@ namespace LighthouseUiCore
 
         public async Task<FileDetails> ReadAsync(string file)
         {
-            var fileAndPath = $"{LocalPath}\\{file}";
+            var fileAndPath = Path.Join(LocalPath, file);
             var fileInfo = new FileInfo(fileAndPath);
             using (var stream = fileInfo.OpenText())
             {
@@ -64,7 +64,8 @@ namespace LighthouseUiCore
 
         public void DeleteFile(string file)
         {
-            File.Delete($"{LocalPath}\\{file}");
+            Console.WriteLine($"Trying to delete {Path.Join(LocalPath, file)}");
+            File.Delete(Path.Join(LocalPath, file));
         }
 
         public List<PermissionViewModel> DirectoryInformation()

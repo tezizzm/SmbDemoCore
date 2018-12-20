@@ -1,30 +1,20 @@
-﻿using Microsoft.Extensions.Options;
-using Steeltoe.Extensions.Configuration.CloudFoundry;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace LighthouseUiCore
 {
     public class SmbClientFactory : ISmbClientFactory
     {
-        private readonly CloudFoundryServicesOptions _services;
+        private readonly IConfiguration _configuration;
 
-        public SmbClientFactory(IOptions<CloudFoundryServicesOptions> services)
+        public SmbClientFactory(IConfiguration configuration)
         {
-            _services = services.Value;
+            _configuration = configuration;
         }
 
         public ISmbClient GetInstance()
         {
-            foreach (var service in _services.ServicesList)
-            {
-                if (service.Label == "user-provided" && service.Name == "win-fs-ups")
-                {
-                    var url = service.Credentials["winfs-share"].Value;
-                    //var domain = service.Credentials["domain"]?.Value;
-                    return new SmbClient(url);
-                }
-            }
-
-            return null;
+            var containerDirectory = _configuration["vcap:services:smbvolume:0:volume_mounts:0:container_dir"];
+            return new SmbClient(containerDirectory);
         }
     }
 }

@@ -3,4 +3,4 @@ applications:
 - name: lighthousewebuicore
 buildpack: dotnet_core_buildpack
 path: .\publish
-health-check-type: process
+health-check-type: http

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace LighthouseUiCore
                 }).ToList();
         }
 
-        public async Task<FileDetailViewModel> GetFile(string file)
+        public async Task<FileDetailViewModel> GetFileAsync(string file)
         {
             var fileDetail = await _smbClient.ReadAsync(file);
             return new FileDetailViewModel
@@ -43,7 +44,7 @@ namespace LighthouseUiCore
             };
         }
 
-        public async Task CreateFile(IFormFile file)
+        public async Task CreateFileAsync(IFormFile file)
         {
             using (var streamReader = new StreamReader(file.OpenReadStream()))
             {
@@ -59,7 +60,7 @@ namespace LighthouseUiCore
 
         public async Task<DeleteFileViewModel> GetDeleteModel(string name)
         {
-            var file = await GetFile(name);
+            var file = await GetFileAsync(name);
             return new DeleteFileViewModel {Name = file.Name};
         }
 
